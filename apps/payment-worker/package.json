@@ -1,0 +1,14 @@
+{
+  "name": "payment-worker",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "tsx --watch entrypoint.ts"
+  },
+  "dependencies": {
+    "fastify": "^5.7.4"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.1",
+    "tsx": "^4.21.0"
+  }
+}

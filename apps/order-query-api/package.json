@@ -2,14 +2,21 @@
   "name": "order-query-api",
   "version": "1.0.0",
   "scripts": {
-    "dev": "node --watch entrypoint.ts"
+    "predev": "npm run predev:prisma:reset && npm run predev:prisma:migrate && npm run predev:prisma:generate",
+    "dev": "tsx --watch entrypoint.ts",
+    "predev:prisma:reset": "rm -rf prisma/migrations && prisma migrate reset --config=./prisma.config --force",
+    "predev:prisma:migrate": "prisma migrate dev --name init --config=./prisma.config",
+    "predev:prisma:generate": "prisma generate --config=./prisma.config",
+    "prisma:studio": "prisma studio --port 5556 --browser none --config=./prisma.config"
   },
   "dependencies": {
+    "@prisma/client": "^7.3.0",
     "dotenv": "^17.2.4",
-    "fastify": "^5.7.4",
-    "prisma": "^7.3.0"
+    "fastify": "^5.7.4"
   },
   "devDependencies": {
-    "@types/node": "^25.2.1"
+    "@types/node": "^25.2.1",
+    "prisma": "^7.3.0",
+    "tsx": "^4.21.0"
   }
 }

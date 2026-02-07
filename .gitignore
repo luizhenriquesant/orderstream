@@ -12,3 +12,6 @@ node_modules
 # ENV
 /apps/order-query-api/.env
 /apps/order-command-api/.env
+
+generated
+migrations
