@@ -2,7 +2,7 @@
   "name": "payment-worker",
   "version": "1.0.0",
   "scripts": {
-    "dev": "tsx --watch entrypoint.ts"
+    "dev": "tsx --watch ./src/entrypoint.ts"
   },
   "dependencies": {
     "fastify": "^5.7.4"

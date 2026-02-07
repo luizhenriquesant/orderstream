@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "predev": "npm run predev:prisma:reset && npm run predev:prisma:migrate && npm run predev:prisma:generate",
-    "dev": "tsx --watch entrypoint.ts",
+    "dev": "tsx --watch ./src/entrypoint.ts",
     "predev:prisma:reset": "rm -rf prisma/migrations && prisma migrate reset --config=./prisma.config --force",
     "predev:prisma:migrate": "prisma migrate dev --name init --config=./prisma.config",
     "predev:prisma:generate": "prisma generate --config=./prisma.config",
