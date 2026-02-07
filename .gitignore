@@ -1,0 +1,14 @@
+node_modules
+
+.env
+
+# Prisma generated files
+/generated/prisma
+/apps/order-command-api/generated/prisma
+/apps/order-query-api/generated/prisma
+# Node Modules
+/apps/order-query-api/node_modules
+/apps/order-command-api/node_modules
+# ENV
+/apps/order-query-api/.env
+/apps/order-command-api/.env
