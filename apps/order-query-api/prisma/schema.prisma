@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -11,4 +5,78 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+}
+
+model OrderReadModel {
+  id String @id @default(uuid())
+
+  status String
+
+  total_amount Decimal @db.Decimal(12, 2)
+
+  order_id    String
+  customer_id String?
+
+  last_event_id String?
+  last_event_at DateTime?
+
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  orderItemReadModels OrderItemReadModel[]
+  orderTimelines      OrderTimeline[]
+
+  @@map("order_read_models")
+}
+
+model OrderItemReadModel {
+  order_id String         @id
+  order    OrderReadModel @relation(fields: [order_id], references: [id], onDelete: Cascade)
+
+  sku        String
+  quantity   Int
+  unit_price Decimal @db.Decimal(12, 2)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([order_id])
+  @@index([sku])
+  @@map("order_item_read_models")
+}
+
+model OrderTimeline {
+  id String @id @default(uuid())
+
+  order_id String
+  order    OrderReadModel @relation(fields: [order_id], references: [id], onDelete: Cascade)
+
+  event_type String
+  payload    Json
+
+  occurred_at DateTime @default(now())
+
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  processedEvents ProcessedEvent[]
+
+  @@index([order_id])
+  @@index([event_type])
+  @@map("order_timelines")
+}
+
+model ProcessedEvent {
+  id String @id @default(uuid())
+
+  event_id String
+  event    OrderTimeline @relation(fields: [event_id], references: [id], onDelete: Cascade)
+
+  consumer_name String
+
+  processed_at DateTime @default(now())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([event_id])
+  @@map("processed_events")
 }
