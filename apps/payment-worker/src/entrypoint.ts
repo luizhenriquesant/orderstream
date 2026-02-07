@@ -3,7 +3,6 @@ const fastify = Fastify({
     logger: true
 })
 
-
 try {
     await fastify.listen({ port: 3002 })
 } catch (err) {
