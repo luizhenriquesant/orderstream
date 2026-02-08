@@ -48,7 +48,7 @@ async function main() {
         }
     })
 
-    fastifyOrderRoutes(fastify, new FastifyOrderController(new CreateOrderUseCase()));
+    fastifyOrderRoutes(fastify, new FastifyOrderController(new CreateOrderUseCase(kafkaProducerInstance)));
 
     let isShuttingDown = false;
     const shutdown = async (signal: string) => {

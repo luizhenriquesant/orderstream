@@ -1,6 +1,7 @@
+import { ProducerRepository } from '@/src/domain/repositories/producer.repository';
 import { Producer } from 'kafkajs';
 
-export class KafkaProducer {
+export class KafkaProducer implements ProducerRepository {
     public constructor(
         private readonly producer: Producer
     ) { }
