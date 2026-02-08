@@ -1,12 +1,46 @@
 import Fastify from 'fastify'
-const fastify = Fastify({
-    logger: true
-})
 
+// import FastifyTypeProviderZod from 'fastify-type-provider-zod';
+import { FastifyOrderController } from '@infrastructure/network/controller/order.controller';
+import { fastifyOrderRoutes } from '@infrastructure/network/routes/order.routes';
+import { CreateOrderUseCase } from '@application/usecases/create-order.usecase';
 
-try {
-    await fastify.listen({ port: 3000 })
-} catch (err) {
-    fastify.log.error(err)
-    process.exit(1)
+async function main() {
+    const fastify = Fastify({
+        logger: true
+    })
+
+    fastify.get('/health', {
+        schema: {
+            tags: ['Health'],
+            response: {
+                200: {
+                    type: 'object',
+                    properties: {
+                        status: { type: 'string' },
+                        time: { type: 'string' }
+                    },
+                }
+            }
+        }
+    }, () => {
+        return {
+            status: 'ok',
+            time: new Date().toISOString()
+        }
+    })
+
+    fastifyOrderRoutes(fastify, new FastifyOrderController(new CreateOrderUseCase()));
+
+    try {
+        await fastify.listen({ port: 3000, host: '0.0.0.0' })
+    } catch (err) {
+        fastify.log.error(err)
+        process.exit(1)
+    }
 }
+
+main().catch((err) => {
+    console.error('Error starting server:', err)
+    process.exit(1)
+});

@@ -6,6 +6,21 @@
         "strict": true,
         "types": [
             "node"
-        ]
+        ],
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "./*"
+            ],
+            "@application/*": [
+                "./src/application/*"
+            ],
+            "@infrastructure/*": [
+                "./src/infrastructure/*"
+            ],
+            "@utils/*": [
+                "./src/utils/*"
+            ]
+        }
     }
 }

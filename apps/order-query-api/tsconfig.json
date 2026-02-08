@@ -7,6 +7,17 @@
         "strict": true,
         "types": [
             "node"
-        ]
+        ],
+        "paths": {
+            "@/*": [
+                "./*"
+            ],
+            "@container/*": [
+                "./main/container/*"
+            ],
+            "@shared/*": [
+                "../packages/shared/*"
+            ]
+        }
     }
 }
