@@ -1,6 +1,8 @@
 import Fastify from 'fastify'
 
-// import FastifyTypeProviderZod from 'fastify-type-provider-zod';
+import FastifyTypeProviderZod from 'fastify-type-provider-zod';
+import Zod from 'zod/v4';
+
 import { FastifyOrderController } from '@infrastructure/network/controller/order.controller';
 import { fastifyOrderRoutes } from '@infrastructure/network/routes/order.routes';
 import { CreateOrderUseCase } from '@application/usecases/create-order.usecase';
@@ -8,19 +10,19 @@ import { CreateOrderUseCase } from '@application/usecases/create-order.usecase';
 async function main() {
     const fastify = Fastify({
         logger: true
-    })
+    });
+
+    fastify.setValidatorCompiler(FastifyTypeProviderZod.validatorCompiler);
+    fastify.setSerializerCompiler(FastifyTypeProviderZod.serializerCompiler);
 
     fastify.get('/health', {
         schema: {
             tags: ['Health'],
             response: {
-                200: {
-                    type: 'object',
-                    properties: {
-                        status: { type: 'string' },
-                        time: { type: 'string' }
-                    },
-                }
+                200: Zod.object({
+                    status: Zod.string().default('ok'),
+                    time: Zod.iso.datetime()
+                })
             }
         }
     }, () => {

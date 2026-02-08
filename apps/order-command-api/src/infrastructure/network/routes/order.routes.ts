@@ -8,7 +8,6 @@ export const fastifyOrderRoutes = (
     fastify: FastifyInstance,
     controller: FastifyOrderController
 ) => {
-
     fastify.withTypeProvider<ZodTypeProvider>().post('/orders', {
         schema: {
             tags: ['Orders'],

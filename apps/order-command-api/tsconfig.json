@@ -1,13 +1,17 @@
 {
     "compilerOptions": {
-        "target": "ES2022",
-        "module": "ESNext",
-        "moduleResolution": "Bundler",
+        "target": "ESNext",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "esModuleInterop": true,
         "strict": true,
         "types": [
             "node"
         ],
         "baseUrl": ".",
+        "typeRoots": [
+            "./node_modules/@types"
+        ],
         "paths": {
             "@/*": [
                 "./*"
